@@ -11,10 +11,12 @@
 
 
 #include "permutations.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /***************************************************/
 /* Function: random_num Date:                      */
-/* Authors:                                        */
+/* Authors:                                       */
 /*                                                 */
 /* Rutine that generates a random number           */
 /* between two given numbers                       */
@@ -27,7 +29,15 @@
 /***************************************************/
 int random_num(int inf, int sup)
 {
-  /* your code */
+  int rnumber;
+
+  if( inf < 0 || inf > sup){
+    return ERR;
+  }
+  
+  rnumber = rand() % (sup - inf + 1) + inf;
+
+  return rnumber;
 }
 
 /***************************************************/
@@ -45,7 +55,34 @@ int random_num(int inf, int sup)
 /***************************************************/
 int* generate_perm(int N)
 {
-  /* your code */
+  int *perm = NULL, i, aux, rnum;
+
+  if(N <= 0){
+    return NULL;
+  }
+
+  if(!(perm = (int*)malloc(N * sizeof(int)))){
+    return NULL;
+  }
+
+  for(i=0; i<N; i++){
+    perm[i] = i+1;
+  }
+
+  for(i=0; i<N; i++){
+    rnum = random_num(i, N-1);
+    /*comprobamos que no es menor que i ni mayor que N*/
+    if (rnum < i || rnum >= N) {
+            free(perm);
+            return NULL;
+      }
+    aux = perm[i];
+    perm[i] = perm[rnum];
+    perm[rnum] = aux;
+
+  }
+
+  return perm;
 }
 
 /***************************************************/
