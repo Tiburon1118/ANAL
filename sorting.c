@@ -21,23 +21,27 @@
 int InsertSort(int* array, int ip, int iu) {
 
   int i, A, j;
+  int count = 0;
+
+  if(!array || ip < 0 || iu < 0) return ERR;
 
   for(i = ip + 1; i < iu; i++){
       A = array[i];
       j = i-1;
       while (j >= ip && array[j] > A){
+        count++;
         array[j + 1] = array[j];
         j--;
       }
       array[j+1] = A;
   }
 
-  return *array;
+  return count;
 }
 
 
 /***************************************************/
-/* Function: SelectSort    Date:23-09-26           */
+/* Function: BubbleSort    Date:23-09-26           */
 /* Your comment                                    */
 /***************************************************/
 int BubbleSort(int* array, int ip, int iu)
@@ -45,10 +49,14 @@ int BubbleSort(int* array, int ip, int iu)
   
   int flag = 1, i = iu;
   int aux = 0, j;
-  
+  int count = 0;
+
+  if(!array || ip < 0 || iu < 0) return ERR;
+
   while(flag == 1 && i >= ip + 1){
       flag = 0;
       for(j = ip; j < i - 1; j++){
+        count++;
         if(array[j] > array[j + 1]){
           aux = array[j];
           array[j + 1]= array[j]; 
@@ -59,5 +67,5 @@ int BubbleSort(int* array, int ip, int iu)
       i--;
   }
 
-  return *array;
+  return count;
 }
