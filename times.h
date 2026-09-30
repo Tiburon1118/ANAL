@@ -19,7 +19,10 @@
   #define OK (!(ERR))
 #endif
 
+#include <time.h>
 #include "sorting.h"
+
+
 
 /* type definitions */
 typedef struct time_aa {
