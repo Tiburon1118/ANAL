@@ -20,7 +20,9 @@
 #endif
 
 #include <time.h>
+#include <stdlib.h>
 #include "sorting.h"
+
 
 
 

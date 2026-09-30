@@ -100,9 +100,19 @@ short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num
 /*                                                 */
 /* Your documentation                              */
 /***************************************************/
+
+
 short save_time_table(char* file, PTIME_AA ptime, int n_times)
 {
-  /* your code */
+  if(!file || !ptime || n_times) return ERR;
+  
+
+  file = fopen() 
+
+
+  return OK;
 }
+
+
 
 
