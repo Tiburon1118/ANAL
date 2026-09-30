@@ -15,7 +15,7 @@
 #include "sorting.h"
 
 /*******************************************************/
-/* Function: InsertSort    Date:23-09-26               */
+/* Function: InsertSort    Date:23/09/26               */
 /* Your comment                                        */
 /*******************************************************/
 int InsertSort(int* array, int ip, int iu) {
@@ -41,7 +41,7 @@ int InsertSort(int* array, int ip, int iu) {
 
 
 /***************************************************/
-/* Function: BubbleSort    Date:23-09-26           */
+/* Function: BubbleSort    Date:23/09/26           */
 /* Your comment                                    */
 /***************************************************/
 int BubbleSort(int* array, int ip, int iu)

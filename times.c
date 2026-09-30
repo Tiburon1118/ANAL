@@ -13,7 +13,7 @@
 #include "sorting.h"
 
 /***************************************************/
-/* Function: average_sorting_time Date:            */
+/* Function: average_sorting_time Date: 30/09/2026 */
 /*                                                 */
 /* Your documentation                              */
 /***************************************************/
