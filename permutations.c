@@ -31,7 +31,7 @@ int random_num(int inf, int sup)
 {
   int rnumber;
 
-  if( inf < 0 || inf > sup){
+  if( inf < 0 || inf > sup || sup < 0){
     return ERR;
   }
   
@@ -102,5 +102,44 @@ int* generate_perm(int N)
 /***************************************************/
 int** generate_permutations(int n_perms, int N)
 {
-/* your code */
+
+  int **perm = NULL, i, j, rnum, aux;
+
+  if(n_perms <= 0 || N <=0){
+    return NULL;
+  }
+
+  if(!(perm = (int**)malloc(n_perms*sizeof(int*)))){
+    return NULL;
+  }
+
+  for(i=0; i< n_perms; i++){
+    if(!(perm[i] = (int*)malloc(N*sizeof(int)))){ 
+      while (i > 0) {
+        i--;
+        free(perm[i]);
+      }
+      free(perm);
+      perm= NULL;
+      return NULL;
+    }
+  }
+
+  for(i=0; i<n_perms; i++){
+    for(j=0; j<N; j++){
+      perm[i][j] = j+1;
+    }
+  }
+
+  for(i=0; i<n_perms; i++){
+    for(j=0; j<N;j++){
+      rnum = random_num(j, N-1);
+
+      aux = perm[i][j];
+      perm[i][j] = perm[i][rnum];
+      perm[i][rnum] = aux;
+    }
+  }
+  
+  return perm;
 }
