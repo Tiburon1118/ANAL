@@ -20,27 +20,42 @@
 /***************************************************/
 short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime){
 
-  if(!metodo|| n_perms < 0 || N < 0 || !ptime) return ERR;
+  if(!metodo|| n_perms <= 0 || N <= 0 || !ptime) return ERR;
   
-  int i;
-
-  int perm = generate_permutatios(n_perms, N);
-  if(perm == NULL) return ERR;
-
-  long sum = 0;
-  ptime->min_ob = 0;
+  int i, ob_count;
+  clock_t start, end;
+  long total = 0;
+  ptime->min_ob = 99999;
   ptime->max_ob = 0;
 
+  int** perm = generate_permutatios(n_perms, N);
+  if(perm == NULL) return ERR;
+
+  start = clock();
+  if(start == (clock_t)-1) return ERR;
+
   for(i = 0; i < n_perms; i++){
-    int ob_count = metodo(perm[i], 0, N-1);
-    sum += ob_count;
-    ptime->min_ob = ob_count;
-    ptime->max_ob = ob_count;
+
+    ob_count = metodo(perm[i], 0, N-1);
+    total += ob_count;
+    if(ob_count < ptime->min_ob){
+      ptime->min_ob = ob_count;
+    }
+    if(ob_count > ptime->max_ob){
+      ptime->max_ob = ob_count;
+    }
+    
   }
+  end = clock();
+  if(end == (clock_t)-1) return ERR;
+
+  ptime->n_elems = n_perms;
+  ptime->N = N;
+  ptime->average_ob = total/n_perms;
+  ptime->time = ((double)(end - start)) / CLOCKS_PER_SEC / n_perms;
 
 
-
-
+  return OK;
 }
 
 /***************************************************/
