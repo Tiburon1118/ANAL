@@ -11,7 +11,7 @@
 
 #include "times.h"
 #include "sorting.h"
-#include  "permutations.h"
+#include "permutations.h"
 
 /***************************************************/
 /* Function: average_sorting_time Date: 30/09/2026 */
@@ -28,7 +28,7 @@ short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime
   ptime->min_ob = 99999;
   ptime->max_ob = 0;
 
-  int** perm = generate_permutatios(n_perms, N);
+  int** perm = generate_permutations(n_perms, N);
   if(perm == NULL) return ERR;
 
   start = clock();
@@ -64,8 +64,36 @@ short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime
 /* Your documentation                              */
 /***************************************************/
 short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num_max, int incr, int n_perms){
-  /* Your code */
+  
+  PTIME_AA *ptime = NULL;
+  int N=0, k;
+  if(method == NULL || 1 > num_min || num_min > num_max || incr < 0 || n_perms <0){
+    return ERR;
+  }
+
+  if(!(ptime = (PTIME_AA*)malloc(n_perms*sizeof(PTIME_AA)))){
+    return ERR;
+  }
+
+
+  
+
+  for(k=0; N < num_max; k++){
+    N = num_min + k * incr;
+    if(average_sorting_time(method, n_perms, N, ptime[k]) == ERR){
+      free(ptime);
+      return ERR;
+    }
+  }
+
+  if(save_time_table(file, *ptime, n_perms) == ERR){
+      free(ptime);
+      return ERR;
+    }
+
+  return OK;
 }
+
 
 /***************************************************/
 /* Function: save_time_table Date:                 */

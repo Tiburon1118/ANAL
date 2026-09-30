@@ -4,8 +4,8 @@
  *
  * File: permutations.c
  * Autor: Carlos Aguirre
- * Version: 1.1
- * Fecha: 21-09-2019
+ * Version: 1.3
+ * Fecha: 30-10-2026
  *
  */
 
@@ -16,7 +16,7 @@
 
 /***************************************************/
 /* Function: random_num Date:                      */
-/* Authors:                                       */
+/* Authors: Mario Rodriguez                        */
 /*                                                 */
 /* Rutine that generates a random number           */
 /* between two given numbers                       */
@@ -42,7 +42,7 @@ int random_num(int inf, int sup)
 
 /***************************************************/
 /* Function: generate_perm Date:                   */
-/* Authors:                                        */
+/* Authors:Mario Rodriguez                         */
 /*                                                 */
 /* Rutine that generates a random permutation      */
 /*                                                 */
@@ -87,7 +87,7 @@ int* generate_perm(int N)
 
 /***************************************************/
 /* Function: generate_permutations Date:           */
-/* Authors:                                        */
+/* Authors:Mario Rodriguez                         */
 /*                                                 */
 /* Function that generates n_perms random          */
 /* permutations with N elements                    */
