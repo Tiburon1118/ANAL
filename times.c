@@ -20,20 +20,24 @@
 /***************************************************/
 short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime){
 
-  if(!metodo|| n_perms <= 0 || N <= 0 || !ptime) return ERR;
-  
   int i, ob_count;
   clock_t start, end;
   long total = 0;
+  int** perm = NULL;
+
+  if(!metodo|| n_perms <= 0 || N <= 0 || !ptime) return ERR;
+  
   ptime->min_ob = 99999;
   ptime->max_ob = 0;
 
-  int** perm = generate_permutations(n_perms, N);
+  perm = generate_permutations(n_perms, N);
   if(perm == NULL) return ERR;
 
   start = clock();
-  if(start == (clock_t)-1) return ERR;
-
+  if(start == (clock_t)-1){
+    free(perm);
+    return ERR;
+  }
   for(i = 0; i < n_perms; i++){
 
     ob_count = metodo(perm[i], 0, N-1);
@@ -47,11 +51,19 @@ short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime
     
   }
   end = clock();
-  if(end == (clock_t)-1) return ERR;
+  if(end == (clock_t)-1){
+    free(perm);
+    return ERR;
+  } 
+
+  for(i = 0; i < n_perms; i++){
+    free(perm[i]);
+  }
+  free(perm);
 
   ptime->n_elems = n_perms;
   ptime->N = N;
-  ptime->average_ob = total/n_perms;
+  ptime->average_ob = (double)total/n_perms;
   ptime->time = ((double)(end - start)) / CLOCKS_PER_SEC / n_perms;
 
 
@@ -96,7 +108,7 @@ short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num
 
 
 /***************************************************/
-/* Function: save_time_table Date:                 */
+/* Function: save_time_table Date: 3/10/2026       */
 /*                                                 */
 /* Your documentation                              */
 /***************************************************/
@@ -104,11 +116,22 @@ short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num
 
 short save_time_table(char* file, PTIME_AA ptime, int n_times)
 {
+
+  FILE *f = NULL;
+  int i;
+
   if(!file || !ptime || n_times) return ERR;
+
+  if(!file || ptime == NULL || n_times < 0) return ERR;
   
+  f = fopen(file , "w");
+  if(f == NULL) return ERR;
 
-  file = fopen() 
+  for(i = 0; i < n_times; i++){
+    fprintf(f, "%d %d %f %f %d %d", ptime[i].N, ptime[i].n_elems, ptime[i].time, ptime[i].average_ob, ptime[i].min_ob, ptime[i].max_ob);
+  }
 
+  fclose(f);
 
   return OK;
 }
