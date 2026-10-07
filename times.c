@@ -75,34 +75,36 @@ short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime
 /*                                                 */
 /* Your documentation                              */
 /***************************************************/
-short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num_max, int incr, int n_perms){
-  
-  PTIME_AA *ptime = NULL;
-  int N=0, k;
-  if(method == NULL || 1 > num_min || num_min > num_max || incr < 0 || n_perms <0){
+short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num_max, int incr, int n_perms) {
+  PTIME_AA ptime = NULL;
+  int N, k;
+  int num_times;
+
+  if (method == NULL || file == NULL || 1 > num_min || num_min > num_max || incr <= 0 || n_perms <= 0) {
     return ERR;
   }
 
-  if(!(ptime = (PTIME_AA*)malloc(n_perms*sizeof(PTIME_AA)))){
+  num_times = ((num_max - num_min) / incr) + 1;
+
+  ptime = (PTIME_AA)malloc(num_times * sizeof(TIME_AA));
+  if (!ptime) {
     return ERR;
   }
 
-
-  
-
-  for(k=0; N < num_max; k++){
+  for (k = 0; k < num_times; k++) {
     N = num_min + k * incr;
-    if(average_sorting_time(method, n_perms, N, ptime[k]) == ERR){
+    if (average_sorting_time(method, n_perms, N, &ptime[k]) == ERR) {
       free(ptime);
       return ERR;
     }
   }
 
-  if(save_time_table(file, *ptime, n_perms) == ERR){
-      free(ptime);
-      return ERR;
-    }
+  if (save_time_table(file, ptime, num_times) == ERR) {
+    free(ptime);
+    return ERR;
+  }
 
+  free(ptime);
   return OK;
 }
 
@@ -119,8 +121,6 @@ short save_time_table(char* file, PTIME_AA ptime, int n_times)
 
   FILE *f = NULL;
   int i;
-
-  if(!file || !ptime || n_times) return ERR;
 
   if(!file || ptime == NULL || n_times < 0) return ERR;
   

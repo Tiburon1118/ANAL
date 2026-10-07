@@ -61,3 +61,18 @@ exercise5_test:
 	@echo Running exercise5
 	@./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
 
+all_test:
+	@echo Running exercise1
+	@./exercise1 -limInf 1 -limSup 5 -numN 10
+
+	@echo Running exercise2
+	@./exercise2 -size 4 -numP 5
+
+	@echo Running exercise3
+	@./exercise3 -size 1 -numP 5
+
+	@echo Running exercise4
+	@./exercise4 -size 1
+
+	@echo Running exercise5
+	@./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
