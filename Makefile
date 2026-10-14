@@ -43,7 +43,7 @@ sorting.o : sorting.c sorting.h
 	
 exercise1_test:
 	@echo Running exercise1
-	@./exercise1 -limInf 1 -limSup 5 -numN 10
+	@./exercise1 -limInf 1 -limSup 10 -numN 100
 
 exercise2_test:
 	@echo Running exercise2
@@ -51,7 +51,7 @@ exercise2_test:
 
 exercise3_test:
 	@echo Running exercise3
-	@./exercise3 -size 1 -numP 5
+	@./exercise3 -size 4  -numP 5
 
 exercise4_test:
 	@echo Running exercise4

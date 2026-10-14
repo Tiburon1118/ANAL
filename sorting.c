@@ -25,13 +25,21 @@ int InsertSort(int* array, int ip, int iu) {
 
   if(!array || ip < 0 || iu < 0) return ERR;
 
-  for(i = ip + 1; i < iu; i++){
+  if(ip == iu) return count;
+
+  for(i = ip + 1; i <= iu; i++){
       A = array[i];
       j = i-1;
-      while (j >= ip && array[j] > A){
-        count++;
-        array[j + 1] = array[j];
-        j--;
+       while (j >= ip) {
+          count++;
+          
+          if (array[j] > A) {
+              array[j + 1] = array[j];
+              j--;
+          } else {
+            
+              break; 
+          }
       }
       array[j+1] = A;
   }
