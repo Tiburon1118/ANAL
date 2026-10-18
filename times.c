@@ -128,7 +128,7 @@ short save_time_table(char* file, PTIME_AA ptime, int n_times)
   if(f == NULL) return ERR;
 
   for(i = 0; i < n_times; i++){
-    fprintf(f, "%d %d %f %f %d %d", ptime[i].N, ptime[i].n_elems, ptime[i].time, ptime[i].average_ob, ptime[i].min_ob, ptime[i].max_ob);
+    fprintf(f, "%d %d %f %f %d %d \n", ptime[i].N, ptime[i].n_elems, ptime[i].time, ptime[i].average_ob, ptime[i].min_ob, ptime[i].max_ob );
   }
 
   fclose(f);
