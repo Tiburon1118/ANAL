@@ -15,8 +15,20 @@
 
 /***************************************************/
 /* Function: average_sorting_time Date: 30/09/2026 */
+/* Authors: Jorge Caceres                          */
 /*                                                 */
-/* Your documentation                              */
+/* Routine that measures the execution time and OB */
+/* statistics of a sorting method over a set of    */
+/* generated permutations                          */
+/*                                                 */
+/* Input:                                          */
+/* pfunc_sort metodo: sorting function pointer     */
+/* int n_perms: number of permutations to sort     */
+/* int N: size of each permutation                 */
+/* PTIME_AA ptime: pointer to structure where      */
+/*                 statistics will be stored       */
+/* Output:                                         */
+/* short: OK on success or ERR in case of error    */
 /***************************************************/
 short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime){
 
@@ -71,9 +83,22 @@ short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime
 }
 
 /***************************************************/
-/* Function: generate_sorting_times Date:          */
+/* Function: generate_sorting_times Date: 30/09/26 */
+/* Authors: Mario Rodriguez                        */
 /*                                                 */
-/* Your documentation                              */
+/* Routine that generates sorting statistics across*/
+/* a range of permutation sizes and saves the      */
+/* results into a file                             */
+/*                                                 */
+/* Input:                                          */
+/* pfunc_sort method: sorting function pointer     */
+/* char* file: output file path                    */
+/* int num_min: minimum permutation size           */
+/* int num_max: maximum permutation size           */
+/* int incr: size increment step                   */
+/* int n_perms: number of permutations per size    */
+/* Output:                                         */
+/* short: OK on success or ERR in case of error    */
 /***************************************************/
 short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num_max, int incr, int n_perms) {
   PTIME_AA ptime = NULL;
@@ -110,9 +135,19 @@ short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num
 
 
 /***************************************************/
-/* Function: save_time_table Date: 3/10/2026       */
+/* Function: save_time_table Date: 03/10/2026      */
+/* Authors: Jorge Caceres                          */
 /*                                                 */
-/* Your documentation                              */
+/* Routine that writes a table of algorithm        */
+/* performance statistics (N, n_elems, time,       */
+/* average_ob, min_ob, max_ob) into a file         */
+/*                                                 */
+/* Input:                                          */
+/* char* file: output file path                    */
+/* PTIME_AA ptime: pointer to statistics array     */
+/* int n_times: number of elements in the array    */
+/* Output:                                         */
+/* short: OK on success or ERR in case of error    */
 /***************************************************/
 
 

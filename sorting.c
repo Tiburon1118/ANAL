@@ -14,10 +14,21 @@
 #include <stdlib.h>
 #include "sorting.h"
 
-/*******************************************************/
-/* Function: InsertSort    Date:23/09/26               */
-/* Your comment                                        */
-/*******************************************************/
+/***************************************************/
+/* Function: InsertSort Date: 23/09/26             */
+/* Authors: Jorge Caceres                          */
+/*                                                 */
+/* Routine that sorts an array segment using the   */
+/* insertion sort algorithm and counts the number  */
+/* of basic operation (OB) executions              */
+/*                                                 */
+/* Input:                                          */
+/* int* array: array to be sorted                  */
+/* int ip: starting index of the segment           */
+/* int iu: ending index of the segment             */
+/* Output:                                         */
+/* int: total OB executions or ERR in case of error*/
+/***************************************************/
 int InsertSort(int* array, int ip, int iu) {
 
   int i, A, j;
@@ -49,8 +60,20 @@ int InsertSort(int* array, int ip, int iu) {
 
 
 /***************************************************/
-/* Function: BubbleSort    Date:23/09/26           */
-/* Your comment                                    */
+/* Function: BubbleSort   Date: 23/09/26           */
+/* Authors: Jorge Caceres                          */
+/*                                                 */
+/* Routine that sorts an array segment using the   */
+/* optimized bubble sort algorithm (with early     */
+/* stop flag) and counts the number of basic       */
+/* operation (OB) executions                       */
+/*                                                 */
+/* Input:                                          */
+/* int* array: array to be sorted                  */
+/* int ip: starting index of the segment           */
+/* int iu: ending index of the segment             */
+/* Output:                                         */
+/* int: total OB executions or ERR in case of error*/
 /***************************************************/
 int BubbleSort(int* array, int ip, int iu)
 {
