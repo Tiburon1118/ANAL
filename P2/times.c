@@ -1,0 +1,176 @@
+/**
+ *
+ * Descripcion: Implementation of time measurement functions
+ *
+ * Fichero: times.c
+ * Autor: Carlos Aguirre Maeso
+ * Version: 1.0
+ * Fecha: 16-09-2019
+ *
+ */
+
+#include "times.h"
+#include "sorting.h"
+#include "permutations.h"
+
+/***************************************************/
+/* Function: average_sorting_time Date: 30/09/2026 */
+/* Authors: Jorge Caceres                          */
+/*                                                 */
+/* Routine that measures the execution time and OB */
+/* statistics of a sorting method over a set of    */
+/* generated permutations                          */
+/*                                                 */
+/* Input:                                          */
+/* pfunc_sort metodo: sorting function pointer     */
+/* int n_perms: number of permutations to sort     */
+/* int N: size of each permutation                 */
+/* PTIME_AA ptime: pointer to structure where      */
+/*                 statistics will be stored       */
+/* Output:                                         */
+/* short: OK on success or ERR in case of error    */
+/***************************************************/
+short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime){
+
+  int i, ob_count;
+  clock_t start, end;
+  long total = 0;
+  int** perm = NULL;
+
+  if(!metodo|| n_perms <= 0 || N <= 0 || !ptime) return ERR;
+  
+  ptime->min_ob = 99999;
+  ptime->max_ob = 0;
+
+  perm = generate_permutations(n_perms, N);
+  if(perm == NULL) return ERR;
+
+  start = clock();
+  if(start == (clock_t)-1){
+    free(perm);
+    return ERR;
+  }
+  for(i = 0; i < n_perms; i++){
+
+    ob_count = metodo(perm[i], 0, N-1);
+    total += ob_count;
+    if(ob_count < ptime->min_ob){
+      ptime->min_ob = ob_count;
+    }
+    if(ob_count > ptime->max_ob){
+      ptime->max_ob = ob_count;
+    }
+    
+  }
+  end = clock();
+  if(end == (clock_t)-1){
+    free(perm);
+    return ERR;
+  } 
+
+  for(i = 0; i < n_perms; i++){
+    free(perm[i]);
+  }
+  free(perm);
+
+  ptime->n_elems = n_perms;
+  ptime->N = N;
+  ptime->average_ob = (double)total/n_perms;
+  ptime->time = ((double)(end - start)) / CLOCKS_PER_SEC / n_perms;
+
+
+  return OK;
+}
+
+/***************************************************/
+/* Function: generate_sorting_times Date: 30/09/26 */
+/* Authors: Mario Rodriguez                        */
+/*                                                 */
+/* Routine that generates sorting statistics across*/
+/* a range of permutation sizes and saves the      */
+/* results into a file                             */
+/*                                                 */
+/* Input:                                          */
+/* pfunc_sort method: sorting function pointer     */
+/* char* file: output file path                    */
+/* int num_min: minimum permutation size           */
+/* int num_max: maximum permutation size           */
+/* int incr: size increment step                   */
+/* int n_perms: number of permutations per size    */
+/* Output:                                         */
+/* short: OK on success or ERR in case of error    */
+/***************************************************/
+short generate_sorting_times(pfunc_sort method, char* file, int num_min, int num_max, int incr, int n_perms) {
+  PTIME_AA ptime = NULL;
+  int N, k;
+  int num_times;
+
+  if (method == NULL || file == NULL || 1 > num_min || num_min > num_max || incr <= 0 || n_perms <= 0) {
+    return ERR;
+  }
+
+  num_times = ((num_max - num_min) / incr) + 1;
+
+  ptime = (PTIME_AA)malloc(num_times * sizeof(TIME_AA));
+  if (!ptime) {
+    return ERR;
+  }
+
+  for (k = 0; k < num_times; k++) {
+    N = num_min + k * incr;
+    if (average_sorting_time(method, n_perms, N, &ptime[k]) == ERR) {
+      free(ptime);
+      return ERR;
+    }
+  }
+
+  if (save_time_table(file, ptime, num_times) == ERR) {
+    free(ptime);
+    return ERR;
+  }
+
+  free(ptime);
+  return OK;
+}
+
+
+/***************************************************/
+/* Function: save_time_table Date: 03/10/2026      */
+/* Authors: Jorge Caceres                          */
+/*                                                 */
+/* Routine that writes a table of algorithm        */
+/* performance statistics (N, n_elems, time,       */
+/* average_ob, min_ob, max_ob) into a file         */
+/*                                                 */
+/* Input:                                          */
+/* char* file: output file path                    */
+/* PTIME_AA ptime: pointer to statistics array     */
+/* int n_times: number of elements in the array    */
+/* Output:                                         */
+/* short: OK on success or ERR in case of error    */
+/***************************************************/
+
+
+short save_time_table(char* file, PTIME_AA ptime, int n_times)
+{
+
+  FILE *f = NULL;
+  int i;
+
+  if(!file || ptime == NULL || n_times < 0) return ERR;
+  
+  f = fopen(file , "w");
+  if(f == NULL) return ERR;
+
+  for(i = 0; i < n_times; i++){
+    fprintf(f, "%d %d %f %f %d %d \n", ptime[i].N, ptime[i].n_elems, ptime[i].time, ptime[i].average_ob, ptime[i].min_ob, ptime[i].max_ob );
+  }
+
+  fclose(f);
+
+  return OK;
+}
+
+
+
+
