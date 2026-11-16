@@ -117,17 +117,18 @@ int BubbleSort(int* array, int ip, int iu)
 /* int: total OB executions or ERR in case of error*/
 /***************************************************/
 int MergeSort(int* array, int ip, int iu){
-  int im, total,res;
+  int im, res;
+  int total = 0; /* 1. Inicializar a 0 */
 
   if(array == NULL || ip > iu || ip < 0 || iu < 0){
     return ERR;
   }
 
   if(ip == iu){
-    return OK;
+    return 0; 
   }
 
-  im = (ip+iu)/2;
+  im = (ip + iu) / 2;
 
   res = MergeSort(array, ip, im);
   if(res == ERR) return ERR;
@@ -137,61 +138,63 @@ int MergeSort(int* array, int ip, int iu){
   if(res == ERR) return ERR;
   total += res;
 
-  res = merge(array, ip, im, iu);
+  res = merge(array, ip, iu, im); 
   if(res == ERR) return ERR;
   
   return total + res;
 }
 
-
 int merge(int* array, int ip, int iu, int im){
-  
-  int i,j,k,size,total;
+  int i, j, k, size;
+  int total = 0; /* 1. Inicializar a 0 */
   int *aux = NULL;
 
-  if(array == NULL || ip > iu || ip < 0 || iu  < 0){
+  if(array == NULL || ip < 0 || iu < 0 || ip > iu || im < ip || im > iu){
     return ERR;
   }
 
   if(ip == iu){
     return 0;
   }
-  size = iu-ip+1;
-  if(!(aux = (int*)malloc(size*sizeof(int)))){
+
+  size = iu - ip + 1;
+  if(!(aux = (int*)malloc(size * sizeof(int)))){
+    fprintf(stderr, "Error: no se pudo reservar memoria en merge\n");
     return ERR;
   }
 
-  i= ip;
-  j=im+1;
-  k=ip; 
+  i = ip;
+  j = im + 1;
+  k = 0; 
 
-  while (i<=im && j<= iu){
-    if(array[i]<array[j]){
+  while (i <= im && j <= iu){
+    total++;
+    if(array[i] < array[j]){
       aux[k] = array[i];
       i++;
-    }else{
+    } else {
       aux[k] = array[j];
       j++;
     }
     k++;
-    total++;
   }
-  if(i>im){
-    while(j<= iu){
+
+  if(i > im){
+    while(j <= iu){
       aux[k] = array[j];
       j++;
       k++;
     }
-  }else if(j>iu){
-    while(i<= iu){
+  } else if(j > iu){
+    while(i <= im){ 
       aux[k] = array[i];
       i++;
       k++;
     }
   }
 
-  for(i=ip; i< iu; i++){
-    array[i] = aux[i];
+  for(i = ip; i <= iu; i++){
+    array[i] = aux[i - ip];
   }
 
   free(aux);

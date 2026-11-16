@@ -59,7 +59,7 @@ exercise4_test:
 
 exercise5_test:
 	@echo Running exercise5
-	@./exercise5 -num_min 1 -num_max 5 -incr 1 -numP 5 -outputFile exercise5.log
+	@./exercise5 -num_min 1000 -num_max 10000 -incr 1000 -numP 1000 -outputFile Merge.log
 
 all_test:
 	@echo Running exercise1
@@ -72,7 +72,7 @@ all_test:
 	@./exercise3 -size 1 -numP 5
 
 	@echo Running exercise4
-	@./exercise4 -size 6
+	@./exercise4 -size 7
 
 	@echo Running exercise5
-	@./exercise5 -num_min 100 -num_max 1000 -incr 100 -numP 1000 -outputFile exercise5.log
+	@./exercise5 -num_min 1000 -num_max 10000 -incr 1000 -numP 1000 -outputFile Merge.log
