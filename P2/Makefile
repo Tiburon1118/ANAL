@@ -61,6 +61,10 @@ exercise5_test:
 	@echo Running exercise5
 	@./exercise5 -num_min 1000 -num_max 10000 -incr 1000 -numP 1000 -outputFile Merge.log
 
+graficas: exercise5
+	./exercise5 -num_min 1000 -num_max 10000 -incr 1000 -numP 1000 -outputFile quicksort_median.log
+	gnuplot script.gp
+
 all_test:
 	@echo Running exercise1
 	@./exercise1 -limInf 1 -limSup 5 -numN 10

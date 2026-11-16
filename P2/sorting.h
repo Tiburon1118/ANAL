@@ -19,14 +19,31 @@
   #define OK (!(ERR))
 #endif
 
+
+
+
+
 /* type definitions */
 typedef int (* pfunc_sort)(int*, int, int);
+
+typedef int (*pfunc_pivot)(int*, int, int, int*);
 
 /* Functions */
 
 int BubbleSort(int* array, int ip, int iu);
 int InsertSort(int* array, int ip, int iu);
+
 int MergeSort(int* array, int ip, int iu);
 int merge(int* array, int ip, int iu, int im);
+
+int QuickSort_min(int* array, int ip, int iu);
+int partition(int* array, int ip, int iu, int* pos, pfunc_pivot pivot);
+int pivot_min(int* array, int ip, int iu, int* pos);
+
+int QuickSort_mean(int* array, int ip, int iu);
+int pivot_mean(int* array, int ip, int iu, int* pos);
+
+int pivot_median(int* array, int ip, int iu, int* pos);
+int QuickSort_median(int* array, int ip, int iu);
 
 #endif

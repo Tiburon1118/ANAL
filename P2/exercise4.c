@@ -49,6 +49,11 @@ int main(int argc, char** argv)
     exit(-1);
   }
 
+  printf("permutacion inicial: ");
+  for(j = 0; j < tamano; j++) {
+    printf("%d ", perm[j]);
+  }
+  
   ret =MergeSort(perm, 0, tamano-1);
 
   if (ret == ERR) {
@@ -56,10 +61,12 @@ int main(int argc, char** argv)
     free(perm);
     exit(-1);
   }
-
+  printf("\n");
   for(j = 0; j < tamano; j++) {
-    printf("%d \t", perm[j]);
+    printf("%d ", perm[j]);
   }
+
+  printf("Numero de OBs: %d", ret);
   printf("\n");
 
   free(perm);
