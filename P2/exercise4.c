@@ -54,7 +54,7 @@ int main(int argc, char** argv)
     printf("%d ", perm[j]);
   }
   
-  ret =MergeSort(perm, 0, tamano-1);
+  ret = QuickSort_median(perm, 0, tamano-1);
 
   if (ret == ERR) {
     printf("Error: Error in BubbleSort\n");

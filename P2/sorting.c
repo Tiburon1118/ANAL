@@ -201,8 +201,6 @@ int merge(int* array, int ip, int iu, int im){
   return total;
 }
 
-
-
 static void swap(int *a, int *b) {
     int tmp = *a;
     *a = *b;
@@ -356,13 +354,13 @@ int QuickSort_median(int* array, int ip, int iu){
     if (count == ERR) return ERR;
 
     if (ip < pos - 1) {
-        qs_l = QuickSort_mean(array, ip, pos - 1);
+        qs_l = QuickSort_median(array, ip, pos - 1);
         if (qs_l == ERR) return ERR;
         count += qs_l;
     }
 
     if (pos + 1 < iu) {
-        qs_r = QuickSort_mean(array, pos + 1, iu);
+        qs_r = QuickSort_median(array, pos + 1, iu);
         if (qs_r == ERR) return ERR;
         count += qs_r;
     }
